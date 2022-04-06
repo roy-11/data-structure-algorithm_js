@@ -25,8 +25,14 @@ function reverseStrings4(str) {
   return reversed.join("");
 }
 
+function reverseStrings5(str) {
+  if (str === "") return "";
+  return reverseStrings5(str.substr(1)) + str.charAt(0);
+}
+
 console.log(reverseStrings("hello"));
 console.log(reverseStrings(123));
 console.log(reverseStrings2("hello"));
 console.log(reverseStrings3("hello"));
 console.log(reverseStrings4("hello"));
+console.log(reverseStrings5("hello"));
