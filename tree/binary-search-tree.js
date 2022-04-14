@@ -50,8 +50,6 @@ class BinarySearchTree {
 
     return null;
   }
-  // remove
-
   breadthFirstSearch() {
     let currentNode = this.root;
     const queue = [];
@@ -69,6 +67,46 @@ class BinarySearchTree {
 
     return valueList;
   }
+  breadthFirstSearchR(queue, valueList) {
+    if (!queue.length) return valueList;
+    let currentNode = queue.shift();
+    valueList.push(currentNode.value);
+
+    if (currentNode.left) queue.push(currentNode.left);
+    if (currentNode.right) queue.push(currentNode.right);
+
+    return this.breadthFirstSearchR(queue, valueList);
+  }
+  DFSInorder() {
+    return traverseInOrder(this.root, []);
+  }
+  DFSPreorder() {
+    return traversePreOrder(this.root, []);
+  }
+  DFSPostorder() {
+    return traversePostOrder(this.root, []);
+  }
+}
+
+function traverseInOrder(node, list) {
+  if (node.left) traverseInOrder(node.left, list);
+  list.push(node.value);
+  if (node.right) traverseInOrder(node.right, list);
+  return list;
+}
+
+function traversePreOrder(node, list) {
+  list.push(node.value);
+  if (node.left) traversePreOrder(node.left, list);
+  if (node.right) traversePreOrder(node.right, list);
+  return list;
+}
+
+function traversePostOrder(node, list) {
+  if (node.left) traversePostOrder(node.left, list);
+  if (node.right) traversePostOrder(node.right, list);
+  list.push(node.value);
+  return list;
 }
 
 const tree = new BinarySearchTree();
@@ -89,7 +127,10 @@ console.log(tree.lookup(15));
 console.log(tree.lookup(1));
 console.log(tree.lookup(171));
 console.log(tree.breadthFirstSearch());
-
+console.log(tree.breadthFirstSearchR([tree.root], []));
+console.log(tree.DFSInorder());
+console.log(tree.DFSPreorder());
+console.log(tree.DFSPostorder());
 //     9
 //  4     20
 //1  6  15  170
