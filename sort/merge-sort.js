@@ -13,18 +13,18 @@ function mergeSort(array) {
 
 function merge(left, right) {
   const mergedArray = [];
-  let i = 0;
-  let j = 0;
-  let checkEleArr1 = left[i];
-  let checkEleArr2 = right[j];
+  let leftIndex = 0;
+  let leftElement = left[leftIndex];
+  let rightIndex = 0;
+  let rightElement = right[rightIndex];
 
-  while (checkEleArr1 || checkEleArr2) {
-    if (!checkEleArr2 || checkEleArr1 < checkEleArr2) {
-      mergedArray.push(checkEleArr1);
-      checkEleArr1 = left[++i];
+  while (leftElement || rightElement) {
+    if (leftElement < rightElement || rightElement === undefined) {
+      mergedArray.push(leftElement);
+      leftElement = left[++leftIndex];
     } else {
-      mergedArray.push(checkEleArr2);
-      checkEleArr2 = right[++j];
+      mergedArray.push(rightElement);
+      rightElement = right[++rightIndex];
     }
   }
 
