@@ -11,7 +11,7 @@
 function firstRecurringCharacter(input) {
   const map = {};
   for (let i = 0; i < input.length; i++) {
-    if (!map[input[i]]) {
+    if (map[input[i]] === undefined) {
       map[input[i]] = 0;
     } else {
       return input[i];
