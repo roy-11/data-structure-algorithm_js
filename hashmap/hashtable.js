@@ -5,10 +5,10 @@ class HashTable {
 
   get(key) {
     const hashKey = this._hash(key);
-    const currentBucket = this.data[hashKey];
-    if (currentBucket) {
-      for (let i = 0; i < currentBucket.length; i++) {
-        if (currentBucket[i][0] === key) return currentBucket[i][1];
+    const bucketsArray = this.data[hashKey];
+    if (bucketsArray) {
+      for (let i = 0; i < bucketsArray.length; i++) {
+        if (bucketsArray[i][0] === key) return bucketsArray[i][1];
       }
     }
   }
@@ -24,14 +24,14 @@ class HashTable {
   keys() {
     const keysArray = [];
     for (let i = 0; i < this.data.length; i++) {
-      const currentBucket = this.data[i];
+      const bucketsArray = this.data[i];
 
-      if (currentBucket) {
-        if (currentBucket.length < 2) {
-          keysArray.push(currentBucket[0][0]);
+      if (bucketsArray) {
+        if (bucketsArray.length < 2) {
+          keysArray.push(bucketsArray[0][0]);
         } else {
-          for (let j = 0; j < currentBucket.length; j++) {
-            keysArray.push(currentBucket[j][0]);
+          for (let j = 0; j < bucketsArray.length; j++) {
+            keysArray.push(bucketsArray[j][0]);
           }
         }
       }
