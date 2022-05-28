@@ -1,10 +1,8 @@
 var maxProfit = function(prices) {
     let maxProfit = 0;
-    let min = undefined;
-    
+    let min = prices[0];
+   
     for(let i = 1; i < prices.length; i++){
-        if(min === undefined) min = prices[i-1];
-        
         const profit = prices[i] - min;
         maxProfit = Math.max(maxProfit, profit); 
         
@@ -13,3 +11,4 @@ var maxProfit = function(prices) {
     
     return maxProfit;
 };
+
