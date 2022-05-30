@@ -50,6 +50,115 @@ class BinarySearchTree {
 
     return null;
   }
+  remove(value) {
+    if (!this.root) return false;
+
+    let removeNode = this.root;
+    let parentNode = null;
+    let targetExist = false;
+
+    while (removeNode) {
+      if (value < removeNode.value) {
+        parentNode = removeNode;
+        removeNode = removeNode.left;
+      } else if (value > removeNode.value) {
+        parentNode = removeNode;
+        removeNode = removeNode.right;
+      } else if (removeNode.value === value) {
+        targetExist = true;
+        break;
+      }
+    }
+
+    if (targetExist) {
+      // Option 1
+      // 削除するノードが右の子ノードを持たないケース
+      if (removeNode.right === null) {
+        // 削除するノードがrootノードだった場合には（右がnullなので）左を繰り上げる
+        if (parentNode === null) {
+          this.root = removeNode.left;
+          return;
+        }
+
+        // 削除するノードが親から見て左の子ノードだった場合には、親の左にデータを入れる（同じ位置に繰り上げ）
+        if (removeNode.value < parentNode.value) {
+          parentNode.left = removeNode.left;
+          return;
+        }
+
+        // 削除するノードが親から見て右の子ノードだった場合には、親の右にデータを入れる（同じ位置に繰り上げ）
+        if (removeNode.value > parentNode.value) {
+          parentNode.right = removeNode.left;
+          return;
+        }
+      }
+
+      // Option 2
+      // 削除するノードの右の子ノードが左に子ノードを持たないケース
+      if (removeNode.right.left === null) {
+        // 削除するノードの左側データを、右の子ノードの左に移す
+        removeNode.right.left = removeNode.left;
+
+        // 削除するノードがrootノードだった場合には右を繰り上げる（左側の全て右に移してあるので可能）
+        if (parentNode === null) {
+          this.root = removeNode.right;
+          return;
+        }
+
+        // 削除するノードが親から見て左の子ノードだった場合には、親の左にデータを入れる（同じ位置に繰り上げ）
+        if (removeNode.value < parentNode.value) {
+          parentNode.left = removeNode.right;
+          return;
+        }
+
+        // 削除するノードが親から見て右の子ノードだった場合には、親の右にデータを入れる（同じ位置に繰り上げ）
+        if (removeNode.value > parentNode.value) {
+          parentNode.right = removeNode.right;
+          return;
+        }
+      }
+
+      // Option 3
+      // 削除するノードの右の子ノードが左に子ノードを持つケース
+      if (removeNode.right.left) {
+        // 右の子ノード以降で最も左にあるノードを探す（つまり、削除するノードよりも値が大きいが最も小さい値）
+        let leftMostParent = removeNode.right;
+        let leftMost = leftMostParent.left;
+
+        while (leftMost.left !== null) {
+          leftMostParent = leftMost;
+          leftMost = leftMost.left;
+        }
+
+        // 最も左のノードがその親の左に、右の子ノードを渡しておく
+        // （最も左なので左の子ノードはないため右のみ渡す）
+        leftMostParent.left = leftMost.right;
+
+        // 削除するノードの右と左をその最も左のノードに付け替える
+        leftMost.left = removeNode.left;
+        leftMost.right = removeNode.right;
+
+        // 削除するノードがrootノードだった場合には最も左のノードを入れる(削除するrootノードの子は付け替え済み)
+        if (parentNode === null) {
+          this.root = leftMost;
+          return;
+        }
+
+        // 削除するノードが親から見て左の子ノードだった場合には、親の左にデータを入れる（同じ位置に繰り上げ）
+        if (removeNode.value < parentNode.value) {
+          parentNode.left = leftMost;
+          return;
+        }
+
+        // 削除するノードが親から見て右の子ノードだった場合には、親の右にデータを入れる（同じ位置に繰り上げ）
+        if (removeNode.value > parentNode.value) {
+          parentNode.right = leftMost;
+          return;
+        }
+      }
+    }
+  }
+
   breadthFirstSearch() {
     let currentNode = this.root;
     const queue = [];
@@ -131,6 +240,10 @@ console.log(tree.breadthFirstSearchR([tree.root], []));
 console.log(tree.DFSInorder());
 console.log(tree.DFSPreorder());
 console.log(tree.DFSPostorder());
+tree.remove(9);
+console.log(tree.breadthFirstSearch());
+tree.insert(17);
+console.log(tree.breadthFirstSearch());
 //     9
 //  4     20
 //1  6  15  170
