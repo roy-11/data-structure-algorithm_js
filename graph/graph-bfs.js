@@ -42,6 +42,30 @@ class Graph {
       console.log(node + "-->" + connections);
     }
   }
+  // bfs
+  getDistanceFrom(node) {
+    // 本来はリンクリストで実装
+    const queue = [];
+    queue.push(node);
+    const distanceMap = { [node]: 0 };
+
+    while (queue.length !== 0) {
+      const vertex = queue.shift();
+      const toVs = this.adjacentList[vertex];
+
+      for (let i = 0; i < toVs.length; i++) {
+        const toV = toVs[i];
+        if (distanceMap[toV] === undefined) {
+          // vertexはqueueから取り出したものなので、distanceMap[vertex]は必ず記録ずみ
+          // つまりたどってきた１つ前のvertexの距離に+1している
+          distanceMap[toV] = distanceMap[vertex] + 1;
+          queue.push(toV);
+        }
+      }
+    }
+
+    console.log(distanceMap);
+  }
 }
 
 const myGraph = new Graph();
@@ -56,31 +80,6 @@ const listEdge = [
   ["0", "2"],
   ["6", "5"],
 ];
-
 myGraph.addVertexList(listVertex);
 myGraph.addEdgeList(listEdge);
-
-// myGraph.addVertex("0");
-// myGraph.addVertex("1");
-// myGraph.addVertex("2");
-// myGraph.addVertex("3");
-// myGraph.addVertex("4");
-// myGraph.addVertex("5");
-// myGraph.addVertex("6");
-// myGraph.addEdge("3", "1");
-// myGraph.addEdge("3", "4");
-// myGraph.addEdge("4", "2");
-// myGraph.addEdge("4", "5");
-// myGraph.addEdge("1", "2");
-// myGraph.addEdge("1", "0");
-// myGraph.addEdge("0", "2");
-// myGraph.addEdge("6", "5");
-
-console.log("test");
-myGraph.showConnections();
-//Answer:
-// 0-->1 2
-// 1-->3 2 0
-// 2-->4 1 0
-// 3-->1 4
-// 4-->3 2 5
+myGraph.getDistanceFrom(1);
