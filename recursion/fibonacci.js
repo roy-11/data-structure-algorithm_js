@@ -20,6 +20,23 @@ console.log(fibonacciIterative(0));
 console.log(fibonacciIterative(1));
 console.log(fibonacciIterative(8));
 
+function fibonacciIterative2(n) {
+  if (n < 1) return fibonacciNumbers[n];
+
+  const fibonacciNumbers = [0, 1];
+  for (let i = 0; i < n - 1; i++) {
+    const next = fibonacciNumbers[0] + fibonacciNumbers[1];
+    fibonacciNumbers[0] = fibonacciNumbers[1];
+    fibonacciNumbers[1] = next;
+  }
+
+  return fibonacciNumbers[0];
+}
+
+console.log(fibonacciIterative(0));
+console.log(fibonacciIterative(1));
+console.log(fibonacciIterative(8));
+
 function fibonacciRecursive(n) {
   const fibonacciNumbers = [0, 1];
   if (n === 0) return fibonacciNumbers[0];
