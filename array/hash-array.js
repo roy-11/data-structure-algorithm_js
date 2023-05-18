@@ -1,3 +1,5 @@
+const shiftItems = Symbol();
+
 class MyArray {
   constructor() {
     this.length = 0;
@@ -26,12 +28,13 @@ class MyArray {
 
     const deletedItem = this.data[index];
     delete this.data[index];
-    this._shiftItems(index);
+    this[shiftItems](index);
     this.length--;
     return deletedItem;
   }
 
-  _shiftItems(index) {
+  // private method
+  [shiftItems](index) {
     for (let i = index; i < this.length; i++) {
       this.data[i] = this.data[i + 1];
     }
