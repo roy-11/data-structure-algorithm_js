@@ -5,7 +5,7 @@ function mergeSortedArray(arr1, arr2) {
   let checkEleArr1 = arr1[i];
   let checkEleArr2 = arr2[j];
 
-  while (checkEleArr1 || checkEleArr2) {
+  while (checkEleArr1 !== undefined || checkEleArr2 !== undefined) {
     if (!checkEleArr2 || checkEleArr1 < checkEleArr2) {
       mergedArray.push(checkEleArr1);
       checkEleArr1 = arr1[++i];
